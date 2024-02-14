@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CreateMemo from "./create-memo";
+import CreateMemo from "./CreateMemo";
 import { IsLoginContext } from "./Context";
 
 const App = () => {
