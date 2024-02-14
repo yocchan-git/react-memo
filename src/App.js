@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CreateMemo from "./create-memo";
+import CreateMemo from "./CreateMemo";
 
 const App = () => {
   const [memos, setMemos] = useState(
