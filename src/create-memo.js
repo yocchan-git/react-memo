@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { IsLoginContext } from './Context.js';
+import { IsLoginContext } from "./Context.js";
 
 const CreateMemo = ({ formMemo, memos, setMemos, isForm, setIsForm }) => {
   const [memo, setMemo] = useState(formMemo.content);
@@ -42,7 +42,7 @@ const CreateMemo = ({ formMemo, memos, setMemos, isForm, setIsForm }) => {
         onChange={(e) => setMemo(e.target.value)}
       />
 
-      {isLogin && 
+      {isLogin && (
         <div className="form-button">
           <button className="btn btn--blue btn--radius" onClick={handleSave}>
             {isFormMemo ? "編集" : "追加"}
@@ -56,7 +56,7 @@ const CreateMemo = ({ formMemo, memos, setMemos, isForm, setIsForm }) => {
             </button>
           )}
         </div>
-      }
+      )}
     </>
   );
 };

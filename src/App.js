@@ -30,7 +30,9 @@ const App = () => {
                 onClick={() => handleOpenForm(memo)}
               >
                 <button>
-                  <li className="memo-content">{memo.content.split("\n")[0]}</li>
+                  <li className="memo-content">
+                    {memo.content.split("\n")[0]}
+                  </li>
                 </button>
               </div>
             ))}
@@ -45,7 +47,12 @@ const App = () => {
 
         <div>
           <div>
-            <button className="login-button" onClick={() => setIsLogin(!isLogin)} >{ isLogin ? "ログアウト" : "ログイン"}</button>
+            <button
+              className="login-button"
+              onClick={() => setIsLogin(!isLogin)}
+            >
+              {isLogin ? "ログアウト" : "ログイン"}
+            </button>
           </div>
 
           {isForm && (
