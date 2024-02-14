@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { IsLoginContext } from './Context.js';
 
 const CreateMemo = ({ formMemo, memos, setMemos, isForm, setIsForm }) => {
   const [memo, setMemo] = useState(formMemo.content);
   const isFormMemo = memos.find((m) => m.id === formMemo.id);
+  const isLogin = useContext(IsLoginContext);
 
   useEffect(() => {
     setMemo(formMemo.content);
@@ -40,19 +42,21 @@ const CreateMemo = ({ formMemo, memos, setMemos, isForm, setIsForm }) => {
         onChange={(e) => setMemo(e.target.value)}
       />
 
-      <div className="form-button">
-        <button className="btn btn--blue btn--radius" onClick={handleSave}>
-          {isFormMemo ? "編集" : "追加"}
-        </button>
-        {isFormMemo && (
-          <button
-            className="btn btn--blue btn--radius"
-            onClick={() => handleDelete(formMemo.id)}
-          >
-            削除
+      {isLogin && 
+        <div className="form-button">
+          <button className="btn btn--blue btn--radius" onClick={handleSave}>
+            {isFormMemo ? "編集" : "追加"}
           </button>
-        )}
-      </div>
+          {isFormMemo && (
+            <button
+              className="btn btn--blue btn--radius"
+              onClick={() => handleDelete(formMemo.id)}
+            >
+              削除
+            </button>
+          )}
+        </div>
+      }
     </>
   );
 };
