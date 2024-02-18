@@ -20,22 +20,22 @@ const App = () => {
       <div className="memo-index">
         <ul className="memos">
           {memos.map((memo) => (
-            <div
+            <li
               className="memo"
               key={memo.id}
               onClick={() => handleOpenForm(memo)}
             >
               <button>
-                <li className="memo-content">{memo.content.split("\n")[0]}</li>
+                <div className="memo-content fs-2">{memo.content.split("\n")[0]}</div>
               </button>
-            </div>
+            </li>
           ))}
 
-          <button
+          <li
             onClick={() => handleOpenForm({ id: newMemoId, content: "" })}
           >
-            <li className="plus">+</li>
-          </button>
+            <button className="fs-2">+</button>
+          </li>
         </ul>
       </div>
 

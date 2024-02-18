@@ -47,6 +47,10 @@ textarea:focus {
   text-decoration: underline;
 }
 
+.fs-2 {
+  font-size: 20px;
+}
+
 .form-button {
   display: flex;
   justify-content: center;
