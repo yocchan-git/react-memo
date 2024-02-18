@@ -8,8 +8,7 @@ const App = () => {
   const [isForm, setIsForm] = useState(false);
   const [formMemo, setFormMemo] = useState("");
 
-  const newMemoId =
-    typeof memos[0] !== "undefined" ? memos.slice(-1)[0].id + 1 : 1;
+  const newMemoId = crypto.randomUUID();
 
   const handleOpenForm = (memo) => {
     setFormMemo(memo);
