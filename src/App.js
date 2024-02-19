@@ -8,11 +8,34 @@ const App = () => {
   const [isForm, setIsForm] = useState(false);
   const [formMemo, setFormMemo] = useState("");
 
-  const newMemoId = crypto.randomUUID();
-
   const handleOpenForm = (memo) => {
     setFormMemo(memo);
     setIsForm(true);
+  };
+
+  const handleSaveMemo = (memo) => {
+    let newMemos;
+    if (memo.id) {
+      newMemos = memos.map((m) =>
+        m.id === memo.id ? { ...m, content: memo.content } : m,
+      );
+    } else {
+      memo.id = crypto.randomUUID();
+      newMemos = [...memos, memo];
+    }
+
+    addNewMemos(newMemos);
+  };
+
+  const handleDeleteMemo = (id) => {
+    const newMemos = memos.filter((memo) => memo.id !== id);
+    addNewMemos(newMemos);
+  };
+
+  const addNewMemos = (newMemos) => {
+    setMemos(newMemos);
+    setIsForm(!isForm);
+    localStorage.setItem("Memos", JSON.stringify(newMemos));
   };
 
   return (
@@ -26,14 +49,14 @@ const App = () => {
               onClick={() => handleOpenForm(memo)}
             >
               <button>
-                <div className="memo-content fs-2">{memo.content.split("\n")[0]}</div>
+                <div className="memo-content fs-2">
+                  {memo.content.split("\n")[0]}
+                </div>
               </button>
             </li>
           ))}
 
-          <li
-            onClick={() => handleOpenForm({ id: newMemoId, content: "" })}
-          >
+          <li onClick={() => handleOpenForm({ id: "", content: "" })}>
             <button className="fs-2">+</button>
           </li>
         </ul>
@@ -43,10 +66,8 @@ const App = () => {
         {isForm && (
           <CreateMemo
             formMemo={formMemo}
-            memos={memos}
-            setMemos={setMemos}
-            isForm={isForm}
-            setIsForm={setIsForm}
+            onSave={handleSaveMemo}
+            onDelete={handleDeleteMemo}
           />
         )}
       </div>
