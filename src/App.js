@@ -49,9 +49,9 @@ const App = () => {
               onClick={() => handleOpenForm(memo)}
             >
               <button>
-                <div className="memo-content fs-2">
+                <span className="memo-content fs-2">
                   {memo.content.split("\n")[0]}
-                </div>
+                </span>
               </button>
             </li>
           ))}
