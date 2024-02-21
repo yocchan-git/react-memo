@@ -1,21 +1,78 @@
-function App() {
+import { useState } from "react";
+import CreateMemo from "./CreateMemo";
+
+const App = () => {
+  const [memos, setMemos] = useState(
+    JSON.parse(localStorage.getItem("Memos")) || [],
+  );
+  const [isForm, setIsForm] = useState(false);
+  const [formMemo, setFormMemo] = useState("");
+
+  const handleOpenForm = (memo) => {
+    setFormMemo(memo);
+    setIsForm(true);
+  };
+
+  const handleSaveMemo = (memo) => {
+    let newMemos;
+    if (memo.id) {
+      newMemos = memos.map((m) =>
+        m.id === memo.id ? { ...m, content: memo.content } : m,
+      );
+    } else {
+      memo.id = crypto.randomUUID();
+      newMemos = [...memos, memo];
+    }
+
+    addNewMemos(newMemos);
+  };
+
+  const handleDeleteMemo = (id) => {
+    const newMemos = memos.filter((memo) => memo.id !== id);
+    addNewMemos(newMemos);
+  };
+
+  const addNewMemos = (newMemos) => {
+    setMemos(newMemos);
+    setIsForm(!isForm);
+    localStorage.setItem("Memos", JSON.stringify(newMemos));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="memo-index">
+        <ul className="memos">
+          {memos.map((memo) => (
+            <li
+              className="memo"
+              key={memo.id}
+              onClick={() => handleOpenForm(memo)}
+            >
+              <button>
+                <span className="memo-content fs-2">
+                  {memo.content.split("\n")[0]}
+                </span>
+              </button>
+            </li>
+          ))}
+
+          <li onClick={() => handleOpenForm({ id: "", content: "" })}>
+            <button className="fs-2">+</button>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        {isForm && (
+          <CreateMemo
+            formMemo={formMemo}
+            onSave={handleSaveMemo}
+            onDelete={handleDeleteMemo}
+          />
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
