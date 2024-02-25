@@ -1,13 +1,13 @@
 import { useState } from "react";
 import CreateMemo from "./CreateMemo";
-import { IsLoginContext } from "./Context";
+import { useIsLogin } from "./hooks";
 
 const App = () => {
   const [memos, setMemos] = useState(
     JSON.parse(localStorage.getItem("Memos")) || [],
   );
   const [isForm, setIsForm] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useIsLogin();
   const [formMemo, setFormMemo] = useState("");
 
   const handleOpenForm = (memo) => {
@@ -41,49 +41,44 @@ const App = () => {
   };
 
   return (
-    <IsLoginContext.Provider value={isLogin}>
-      <div className="container">
-        <div className="memo-index">
-          <ul className="memos">
-            {memos.map((memo) => (
-              <li
-                className="memo"
-                key={memo.id}
-                onClick={() => handleOpenForm(memo)}
-              >
-                <button>
-                  <span className="memo-content fs-2">
-                    {memo.content.split("\n")[0]}
-                  </span>
-                </button>
-              </li>
-            ))}
-
-            <li onClick={() => handleOpenForm({ id: "", content: "" })}>
-              <button className="fs-2">+</button>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <div>
-            <button
-              className="login-button"
-              onClick={() => setIsLogin(!isLogin)}
+    <div className="container">
+      <div className="memo-index">
+        <ul className="memos">
+          {memos.map((memo) => (
+            <li
+              className="memo"
+              key={memo.id}
+              onClick={() => handleOpenForm(memo)}
             >
-              {isLogin ? "ログアウト" : "ログイン"}
-            </button>
-          </div>
-          {isForm && (
-            <CreateMemo
-              formMemo={formMemo}
-              onSave={handleSaveMemo}
-              onDelete={handleDeleteMemo}
-            />
-          )}
-        </div>
+              <button>
+                <span className="memo-content fs-2">
+                  {memo.content.split("\n")[0]}
+                </span>
+              </button>
+            </li>
+          ))}
+
+          <li onClick={() => handleOpenForm({ id: "", content: "" })}>
+            <button className="fs-2">+</button>
+          </li>
+        </ul>
       </div>
-    </IsLoginContext.Provider>
+
+      <div>
+        <div>
+          <button className="login-button" onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "ログアウト" : "ログイン"}
+          </button>
+        </div>
+        {isForm && (
+          <CreateMemo
+            formMemo={formMemo}
+            onSave={handleSaveMemo}
+            onDelete={handleDeleteMemo}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 

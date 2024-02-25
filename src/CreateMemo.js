@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from "react";
-import { IsLoginContext } from "./Context.js";
+import { useState, useEffect } from "react";
+import { useIsLogin } from "./hooks";
 
 const CreateMemo = ({ formMemo, onSave, onDelete }) => {
   const [memo, setMemo] = useState(formMemo.content);
-  const isLogin = useContext(IsLoginContext);
+  const [isLogin] = useIsLogin();
 
   useEffect(() => {
     setMemo(formMemo.content);
