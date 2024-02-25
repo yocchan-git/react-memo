@@ -73,3 +73,22 @@ button.btn--blue:hover {
 button.btn--radius {
   border-radius: 100vh;
 }
+
+.login-button {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  margin: auto;
+  padding: 5px 15px;
+  font-weight: bold;
+  border-radius: 0.3rem;
+  border-bottom: 7px solid #0686b2;
+  background: #27acd9;
+  color: #fff;
+}
+.login-button:hover {
+  margin-top: 6px;
+  border-bottom: 1px solid #0686b2;
+  color: #fff;
+}

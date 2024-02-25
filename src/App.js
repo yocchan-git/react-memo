@@ -1,11 +1,13 @@
 import { useState } from "react";
 import CreateMemo from "./CreateMemo";
+import { useIsLogin } from "./hooks";
 
 const App = () => {
   const [memos, setMemos] = useState(
     JSON.parse(localStorage.getItem("Memos")) || [],
   );
   const [isForm, setIsForm] = useState(false);
+  const [isLogin, setIsLogin] = useIsLogin();
   const [formMemo, setFormMemo] = useState("");
 
   const handleOpenForm = (memo) => {
@@ -63,6 +65,11 @@ const App = () => {
       </div>
 
       <div>
+        <div>
+          <button className="login-button" onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "ログアウト" : "ログイン"}
+          </button>
+        </div>
         {isForm && (
           <CreateMemo
             formMemo={formMemo}

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useIsLogin } from "./hooks";
 
 const CreateMemo = ({ formMemo, onSave, onDelete }) => {
   const [memo, setMemo] = useState(formMemo.content);
+  const [isLogin] = useIsLogin();
 
   useEffect(() => {
     setMemo(formMemo.content);
@@ -15,22 +17,24 @@ const CreateMemo = ({ formMemo, onSave, onDelete }) => {
         onChange={(e) => setMemo(e.target.value)}
       />
 
-      <div className="form-button">
-        <button
-          className="btn btn--blue btn--radius"
-          onClick={() => onSave({ id: formMemo.id, content: memo })}
-        >
-          {formMemo.id ? "編集" : "追加"}
-        </button>
-        {formMemo.id && (
+      {isLogin && (
+        <div className="form-button">
           <button
             className="btn btn--blue btn--radius"
-            onClick={() => onDelete(formMemo.id)}
+            onClick={() => onSave({ id: formMemo.id, content: memo })}
           >
-            削除
+            {formMemo.id ? "編集" : "追加"}
           </button>
-        )}
-      </div>
+          {formMemo.id && (
+            <button
+              className="btn btn--blue btn--radius"
+              onClick={() => onDelete(formMemo.id)}
+            >
+              削除
+            </button>
+          )}
+        </div>
+      )}
     </>
   );
 };
